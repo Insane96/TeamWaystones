@@ -29,7 +29,7 @@ public class TeamWaystones
     @SubscribeEvent
     public void onActivatedWaystone(WaystoneActivatedEvent event)
     {
-        LOGGER.info("Activated Waystone: {}", event.getWaystone().getName());
+        LOGGER.debug("Activated Waystone: {}", event.getWaystone().getName());
         ServerPlayer player = validateServerPlayer(event.getPlayer());
         if (player == null)
             return;

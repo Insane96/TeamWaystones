@@ -81,11 +81,11 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    implementation("net.blay09.mods:kuma-api-forge:${kuma_version}")
-    implementation("net.blay09.mods:balm-forge:${balm_version}") {
+    implementation fg.deobf("net.blay09.mods:kuma-api-forge:${kuma_version}")
+    implementation fg.deobf("net.blay09.mods:balm-forge:${balm_version}") {
         changing = balm_version.contains("SNAPSHOT")
     }
-    implementation fg.deobf("curse.maven:waystones-245755:6856603")
+    implementation fg.deobf("net.blay09.mods:waystones-forge:${waystones_version}")
 }
 
 tasks.named('processResources', ProcessResources).configure {
