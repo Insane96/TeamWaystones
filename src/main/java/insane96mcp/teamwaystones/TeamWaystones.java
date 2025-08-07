@@ -4,6 +4,8 @@ import com.mojang.logging.LogUtils;
 import net.blay09.mods.waystones.api.IWaystone;
 import net.blay09.mods.waystones.api.WaystoneActivatedEvent;
 import net.blay09.mods.waystones.core.PlayerWaystoneManager;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.MinecraftForge;
@@ -58,9 +60,14 @@ public class TeamWaystones
     }
 
     private void activateWaystoneForAlly(ServerPlayer player, IWaystone waystone, ServerPlayer otherPlayer) {
-        if (otherPlayer != player && isAllied(otherPlayer, player)) {
-            LOGGER.debug("Activated Waystone {} for {}", waystone.getName(), otherPlayer.getDisplayName());
+        if (otherPlayer != player && isAllied(otherPlayer, player) && !PlayerWaystoneManager.isWaystoneActivated(otherPlayer, waystone)) {
+            LOGGER.debug("Activated Waystone {} for {}", waystone.getName(), otherPlayer.getName().getString());
             PlayerWaystoneManager.activateWaystone(otherPlayer, waystone);
+            var nameComponent = Component.literal(waystone.getName());
+            nameComponent.withStyle(ChatFormatting.WHITE);
+            var chatComponent = Component.translatable("chat.waystones.waystone_activated", nameComponent);
+            chatComponent.withStyle(ChatFormatting.YELLOW);
+            player.sendSystemMessage(chatComponent);
         }
     }
 

@@ -4,6 +4,7 @@ plugins {
     id 'maven-publish'
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'org.spongepowered.mixin' version '0.7.+'
 }
 
 version = mod_version
@@ -41,7 +42,17 @@ minecraft {
             property 'forge.enabledGameTestNamespaces', mod_id
         }
 
+        client2 {
+            parent runs.client
+            workingDirectory project.file('run2')
+
+            args "--username", "Dev2"
+
+            args "--add-opens=java.base/java.lang.invoke=ALL-UNNAMED"
+        }
+
         server {
+            workingDirectory project.file('run-server')
             property 'forge.enabledGameTestNamespaces', mod_id
             args '--nogui'
         }
@@ -80,6 +91,7 @@ repositories {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     implementation fg.deobf("net.blay09.mods:kuma-api-forge:${kuma_version}")
     implementation fg.deobf("net.blay09.mods:balm-forge:${balm_version}") {
