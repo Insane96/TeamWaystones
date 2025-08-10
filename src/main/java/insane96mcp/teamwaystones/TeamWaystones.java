@@ -67,7 +67,7 @@ public class TeamWaystones
             nameComponent.withStyle(ChatFormatting.WHITE);
             var chatComponent = Component.translatable("chat.waystones.waystone_activated", nameComponent);
             chatComponent.withStyle(ChatFormatting.YELLOW);
-            player.sendSystemMessage(chatComponent);
+            otherPlayer.sendSystemMessage(chatComponent);
         }
     }
 
